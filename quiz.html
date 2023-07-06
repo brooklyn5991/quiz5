@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz</title>
+  <style>
+    .answer {
+      display: none;
+    }
+    
+    
+    #timer {
+  font-size: 48px;
+  text-align: center;
+  margin-top: 200px;
+}
+
+    
+  </style>
+  <script>
+    window.onload = function() {
+      // Set timeout for automatic submission
+      setTimeout(submitQuiz, 10000); // 3 minutes
+
+      // Handle form submission
+      var form = document.getElementById('quiz-form');
+      form.onsubmit = function(event) {
+        event.preventDefault(); // Prevent form submission
+        submitQuiz();
+      };
+
+      // Calculate and display final score
+      function submitQuiz() {
+        var score = 0;
+
+        // Check each question
+        var questions = document.getElementsByClassName('question');
+        for (var i = 0; i < questions.length; i++) {
+          var question = questions[i];
+          var selectedOption = question.querySelector('input[name="q' + (i + 1) + '"]:checked');
+          if (selectedOption) {
+            var answer = selectedOption.value;
+            if (answer === 'correct') {
+              score++;
+            }
+          }
+        }
+
+        // Display final score
+        var result = document.getElementById('result');
+        result.innerHTML = 'Your score: ' + score + '/' + questions.length;
+        result.style.display = 'block';
+      }
+    };
+    
+   //new line
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  var timeLeft = 10;
+  var timerElement = document.getElementById("timer");
+
+  var countdownTimer = setInterval(function() {
+    if (timeLeft <= 0) {
+      clearInterval(countdownTimer);
+      timerElement.innerHTML = "Time's up!";
+    } else {
+      timerElement.innerHTML = timeLeft;
+      timeLeft--;
+    }
+  }, 1000);
+});
+
+    
+
+
+  </script>
+</head>
+<body>
+<div id="timer">10</div>
+  <h1>Quiz</h1>
+  <form id="quiz-form">
+    <div class="question">
+      <h3>Question 1: What is the capital of France?</h3>
+      <input type="radio" name="q1" value="correct">Paris<br>
+      <input type="radio" name="q1" value="incorrect">London<br>
+      <input type="radio" name="q1" value="incorrect">Madrid<br>
+    </div>
+
+    <div class="question">
+      <h3>Question 2: What is the largest planet in our solar system?</h3>
+      <input type="radio" name="q2" value="incorrect">Venus<br>
+      <input type="radio" name="q2" value="incorrect">Mars<br>
+      <input type="radio" name="q2" value="correct">Jupiter<br>
+    </div>
+
+    <!-- Add more questions here -->
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <div id="result" style="display: none;"></div>
+</body>
+</html>
